@@ -1,0 +1,11 @@
+CC=g++
+
+CFLAG= -c -Wall
+
+all: mainass1
+
+mainass1:
+	$(CC) $(CFLAGS) main.cpp ass1.cpp ass1.h -o mainass1
+
+clean:
+	rm -rf *.o mainass1

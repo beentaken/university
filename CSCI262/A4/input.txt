@@ -1,0 +1,5 @@
+Levels:0:1:2:3:4:
+Relation:R1:0:R2:1:R3:0:R4:3:
+Relation:R5:4:R6:3:
+User:alice:0:bob:3:carol:2:
+User:user1:1:

@@ -1,0 +1,84 @@
+#include "TelephoneBill.h"
+#include "Bill.h"
+
+using namespace std;
+
+double TelephoneBill::localCallRate = 0.3;
+double TelephoneBill::lineRental = 29.9;
+double TelephoneBill::internetConnection = 35;
+
+istream& operator>>(istream &in, TelephoneBill &b) {
+    cout << "Biller Name: ";
+	in.ignore(100, '\n');
+    getline(in, b.billerName);
+
+    cout << "Biller Code: ";
+    in >> b.billerCode;
+
+    cout << "Reference: ";
+    in >> b.referenceNumber;
+
+    cout << "Account number: ";
+    in >> b.accountNumber;
+
+    cout << "Account name: ";
+	in.ignore(100, '\n');
+    getline(in, b.accountName);
+
+    cout << "Address: ";
+    getline(in, b.address);
+
+    cout << "Start Date: ";
+    in >> b.startDate >> b.startMonth >> b.startYear;
+
+    cout << "End Date: ";
+    in >> b.endDate >> b.endMonth >> b.endYear;
+
+    cout << "Due Date: ";
+    in >> b.dueDate;
+
+	cout << "Number of local calls: ";
+	in >> b.localCalls;
+
+	cout << "International calls: ";
+	in >> b.internationalCalls;
+
+	cout << endl << "Total amount due: $" << endl;
+	cout << endl << "Total GST: $" << endl;
+
+    return in;
+}
+
+ostream& operator<<(ostream &out, const TelephoneBill &b) {
+
+    return out;
+}
+
+TelephoneBill::TelephoneBill() {
+
+}
+
+TelephoneBill::~TelephoneBill() {
+
+}
+
+void TelephoneBill::input(ifstream &fin) {
+
+}
+
+void TelephoneBill::output(ofstream &fout) {
+    fout << "T; ";
+    Bill::output(fout);
+    fout << localCalls << ';' << internationalCalls << ';';
+    fout << GSTTotal() << ';' << total() << endl;
+}
+
+double TelephoneBill::GSTTotal() {
+    double gst = 0;
+    return gst;
+}
+
+double TelephoneBill::total() {
+    double gst = 0;
+    return gst;
+}

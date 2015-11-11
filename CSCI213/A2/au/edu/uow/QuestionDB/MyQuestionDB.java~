@@ -1,0 +1,201 @@
+package au.edu.uow.QuestionDB;
+import au.edu.uow.QuestionLibrary.*;
+
+import java.util.*;
+import java.io.*;
+import java.sql.*;
+
+/**
+ *       
+ * @author Shannon Archer
+ * @version v.1.0
+ *
+ */
+public class MyQuestionDB implements QuestionDB {
+
+	private Connection connection;
+
+	/**
+	 * Default constructor that creates database and inits 
+	 * table for questions
+	 */
+	public MyQuestionDB () {
+		try {
+			// get properties
+			Properties props = new Properties();
+
+			FileInputStream in = new FileInputStream("database.properties");	
+			props.load(in);
+			in.close();
+
+			// get drivers
+			String drivers = props.getProperty("jdbc.drivers");
+			if (drivers != null) 
+				System.setProperty("jdbc.drivers", drivers);
+
+			String url = props.getProperty("jdbc.url");	
+
+			// create db
+			Connection conn = DriverManager.getConnection(url);
+
+			String createTableSql = 
+			"CREATE TABLE Questions (Q_ID INT NOT NULL GENERATED ALWAYS AS " +
+						"IDENTITY (START WITH 1, INCREMENT BY 1), " +
+						"question CLOB, " +
+						"choices CLOB, " +
+						"answer INT, " +
+						"CONSTRAINT primary_key PRIMARY KEY (Q_ID)) ";
+			
+			Statement statement = conn.createStatement();
+			statement.execute(createTableSql);
+			
+			
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+	}
+	
+	/**
+	 * This method creates and populates a table in the database 
+	 *   storing the questions from the question file. This method 
+	 *   should use the addQuestion method to insert question content 
+	 *   into the database
+	 * @param questionFile The file name of the question file
+	 * @return True if the database is successfully populated
+	 * @see #addQuestion(Question)
+	 */
+	public boolean buildQuestionDB(String questionFile) {
+		BufferedReader br = null;
+          
+		try {
+		    String line;
+		      
+		    br = new BufferedReader(new FileReader(questionFile));
+		      
+		    for (int i = 0; (line = br.readLine()) != null; i++) {
+		        if (i < 2)
+		            continue;
+		          
+		        // get type of question
+		        if (line.equals("<MQuestion>")) {
+				LinkedList<String> mquestion = new LinkedList<String>();
+				LinkedList<String> mchoices  = new LinkedList<String>();
+				int manswer = 0;
+
+		                // get question
+		                while ((line = br.readLine()) != null) {
+		                    if (line.equals("<question>")) {
+		                        while ((line = br.readLine()) != null) {
+		                            // quit if end of question
+		                            if (line.equals("</question>"))
+		                                break;
+		                            mquestion.add(line);
+		                        }
+		                    } else if (line.equals("<answer>")) {
+		                        while ((line = br.readLine()) != null) {
+		                            // quit if end of answer
+		                            if (line.equals("</answer>"))
+		                                break;
+		                            manswer = Integer.parseInt(line);
+		                        }
+		                    } else if (line.equals("<choices>")) {
+		                        while ((line = br.readLine()) != null) {
+		                            // quit if end of choices
+		                            if (line.equals("</choices>"))
+		                                break;
+		                            // add new choice to question
+		                            mchoices.add(line);
+		                        }
+		                    } else if (line.equals("</MQuestion>")) {
+		                        break;
+		                    }
+		                }
+		                addQuestion(new MultipleChoiceQuestion((List)mquestion, mchoices, manswer));
+			} else if (line.equals("<TFQuestion>")) {
+			        // create question
+				LinkedList<String> tfquestion = new LinkedList<String>();
+				String tfanswer = "";
+
+			        // get question
+			        while ((line = br.readLine()) != null) {
+			            if (line.equals("<question>")) {
+			                while ((line = br.readLine()) != null) {
+			                    // quit if end of question
+			                    if (line.equals("</question>"))
+			                        break;
+			                    tfquestion.add(line);
+			                }
+			            } else if (line.equals("<answer>")) {
+			                while ((line = br.readLine()) != null) {
+			                    // quit if end of answer
+			                    if (line.equals("</answer>"))
+			                        break;
+			                    tfanswer = line;
+			                }
+			            } else if (line.equals("</TFQuestion>")) {
+			                break;
+			            }
+			        }
+			        addQuestion(new TrueAndFalseQuestion(tfquestion, tfanswer));
+			}
+		    }
+		} catch (IOException e) {
+		    System.out.println(e.toString());
+		    return false;
+		}
+		  
+		return true;
+	}
+	
+	/**
+	 * This method returns the total number of questions in the database
+	 * @return The total number of questions in the question database
+	 * @see #buildQuestionDB
+	 */
+	public int getTotalNumberOfQuestions() {
+		return 0;
+	}
+
+	/**
+	 * This method returns the question from the database at the given position
+	 * @param questionIndex The index of the question in the database
+	 * @return The question object
+	 */
+	public Question getQuestion(int questionIndex) {
+		return null;
+	}
+	
+	/**
+	 * This method adds a question to the database
+	 * @param question The question object to be added to the database
+	 * @return True if the operation is successful
+	 */
+	public boolean addQuestion(Question question) {
+		System.out.println("question");
+
+		return false;
+	}
+		
+	/**
+	 * This method removes the created table from the database
+	 * @return True if the operation is successful
+	 * @see #buildQuestionDB(String)
+	 */
+	public boolean cleanUpDB() {
+		return false;
+	}
+
+	/**
+	 * This method makes a quiz from the question database 
+	 *   with the number of questions as specified. This method
+	 *   should use the getQuestion method to retrieval question
+	 *   content from the database
+	 * @param noOfQuestions - the number of questions in a quiz
+	 * @return Quiz questions in a list
+	 * @see #getQuestion(int)
+	 */
+	public List<Question> makeQuiz(int noOfQuestions) {
+		return null;
+	}
+	
+}

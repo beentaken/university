@@ -1,0 +1,40 @@
+CREATE ROLE role_0;
+CREATE ROLE role_1;
+CREATE ROLE role_2;
+CREATE ROLE role_3;
+CREATE ROLE role_4;
+
+CREATE VIEW view_0 
+AS (SELECT * FROM R1, R3);
+CREATE VIEW view_1 
+AS (SELECT * FROM R2);
+CREATE VIEW view_3 
+AS (SELECT * FROM R4, R6);
+CREATE VIEW view_4 
+AS (SELECT * FROM R5);
+
+GRANT SELECT, INSERT ON view_0 TO role_0;
+GRANT INSERT ON view_1 TO role_0;
+GRANT INSERT ON view_3 TO role_0;
+GRANT INSERT ON view_4 TO role_0;
+GRANT SELECT ON view_0 TO role_1;
+GRANT SELECT, INSERT ON view_1 TO role_1;
+GRANT INSERT ON view_3 TO role_1;
+GRANT INSERT ON view_4 TO role_1;
+GRANT SELECT ON view_0 TO role_2;
+GRANT SELECT ON view_1 TO role_2;
+GRANT INSERT ON view_3 TO role_2;
+GRANT INSERT ON view_4 TO role_2;
+GRANT SELECT ON view_0 TO role_3;
+GRANT SELECT ON view_1 TO role_3;
+GRANT SELECT, INSERT ON view_3 TO role_3;
+GRANT INSERT ON view_4 TO role_3;
+GRANT SELECT ON view_0 TO role_4;
+GRANT SELECT ON view_1 TO role_4;
+GRANT SELECT ON view_3 TO role_4;
+GRANT SELECT, INSERT ON view_4 TO role_4;
+
+GRANT role_0 TO alice;
+GRANT role_3 TO bob;
+GRANT role_2 TO carol;
+GRANT role_1 TO user1;

@@ -1,0 +1,28 @@
+Filename:                           carol1.txt 
+No. characters:                           1854 
+No. words:                                 339 
+No. words:                                  41 
+Ave. word length:                     4.212389 
+Largest word:                    administrator 
+Most frequently used word:                 the 
+20 most frequently used characters:
+' ' :   385 
+e   :   169 
+a   :   125 
+t   :   120 
+o   :   116 
+n   :   107 
+r   :    96 
+s   :    94 
+i   :    90 
+d   :    74 
+h   :    74 
+l   :    61 
+'\n':    41 
+u   :    40 
+m   :    38 
+y   :    35 
+w   :    34 
+c   :    33 
+g   :    32 
+f   :    29 

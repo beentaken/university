@@ -1,0 +1,35 @@
+                                THE GAME OF LIFE
+                             WRITTEN BY IAN SHARPE
+
+
+      The Game Of Life was invented by the mathematician John Conway and 
+      first reached a wide public when it was written up in Scientific 
+      American in 1970 or thereabouts In those days it was mostly played on
+      squared paper. Nowadays computers take all the hard work out of this 
+      fascinating invention. To some it's nothing more than a toy; to others 
+      it and related cellular automata are subjects for serious study.
+
+      In this implementation the screen is divided into a grid of cells 40 
+      wide by 24 deep. A cell may be live (red) or dead (white). You begin by 
+      creating the first generation of live cells, or seed. Use the cursor 
+      keys to move the cursor, and the spacebar to toggle a cell between 
+      live and dead.
+
+      Press [Return], and the program will quickly create successive 
+      generations of cells. A new generation is created by scanning every 
+      cell and counting up the number of live neighbours. A neighbour is 
+      classed as the eight cells that border horizontally, vertically and 
+      diagonally.
+
+      The cell under scrutiny is live or dead in the next generation 
+      according to the following rules:
+
+      * None or one live neighbour: Dies of loneliness.
+      * Two live neighbours: Stays in the same state as it is now.
+      * Three live neighbours: Lives in the next generation.
+      * Four or more live neighbours: Dies of suffocation.
+
+      When every cell on the screen has had its state assessed and made live 
+      or dead according to the rules, the new generation is complete and the 
+      process repeats.
+      

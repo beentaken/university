@@ -1,0 +1,198 @@
+Welcome to the Text File Word Counter
+
+(t)est container classes
+(r)ead text file
+(d)isplay word stats
+(q)uit
+Command > t
+
+
+ **** TESTING CONTAINERS ****
+Testing IntList
+Inserted:=> 0 1 2 3 4 5 6 7 8 9
+Extracted=> 0 1 2 3 4 5 6 7 8 9
+
+Testing WordTree
+Inserted =>
+B H E A J E I I C E F F B H B B F C H G B E C D C C B G I F H G B I J C H J F E
+D B C D D E B B D I H E C H H J D B J I G F A C I G A C E I G F A J A A G B D I
+J D E E G A G G B I E J G D H I I C J B
+Extracted=>
+A       7       3 62 66 72 74 75 85
+B       14      0 12 14 15 20 26 32 41 46 47 57 77 88 99
+C       11      8 17 22 24 25 35 42 52 63 67 97
+D       9       23 40 43 44 48 56 78 81 93
+E       11      2 5 9 21 39 45 51 68 82 83 90
+F       7       10 11 16 29 38 61 71
+G       11      19 27 31 60 65 70 76 84 86 87 92
+H       9       1 13 18 30 36 50 53 54 94
+I       12      6 7 28 33 49 59 64 69 79 89 95 96
+J       9       4 34 37 55 58 73 80 91 98
+
+ **** END OF TESTS ****
+
+
+(t)est container classes
+(r)ead text file
+(d)isplay word stats
+(q)uit
+Command > r
+
+Enter filename: testdata.txt
+
+261 words were added to tree.
+
+(t)est container classes
+(r)ead text file
+(d)isplay word stats
+(q)uit
+Command > d
+
+           Word    Count  Locations
+           1970    1       35
+             24    1       95
+             40    1       92
+              a    7       23  66  88  97 131 149 166
+      according    2      192 249
+            all    1       51
+       american    1       33
+            and    9       20  71 126 135 139 158 178 244 258
+            are    1       75
+             as    2      170 213
+       assessed    1      243
+       automata    1       74
+             be    1      100
+          begin    1      107
+        between    1      133
+         border    1      175
+             by    5        6  15  94 108 154
+           cell    5       98 132 157 181 235
+          cells    4       91 115 148 173
+       cellular    1       73
+        classed    1      169
+       complete    1      257
+      computers    1       49
+         conway    1       19
+       counting    1      159
+         create    1      144
+        created    1      153
+       creating    1      109
+         cursor    2      120 125
+           days    1       40
+           dead    4      104 136 187 248
+           deep    1       96
+     diagonally    1      179
+           dies    2      202 230
+        divided    1       86
+          eight    1      172
+          every    2      156 234
+    fascinating    1       58
+          first    2       21 111
+      following    1      195
+            for    1       77
+           four    1      225
+           game    2        2  10
+     generation    5      112 151 191 224 255
+    generations    1      146
+           grid    1       89
+            had    1      240
+           hard    1       53
+            has    1      239
+   horizontally    1      176
+            ian    1        7
+ implementation    1       82
+             in    7       31  34  38  80 188 209 221
+           into    1       87
+       invented    1       14
+      invention    1       59
+             is    6       85 152 168 184 215 256
+             it    4       27  41  70 214
+            its    2       62 241
+           john    1       18
+           keys    1      121
+           life    2        4  12
+           live   10      101 114 134 164 185 200 206 218 228 246
+          lives    1      220
+     loneliness    1      204
+           made    1      245
+  mathematician    1       17
+            may    1       99
+           more    2       64 227
+         mostly    1       43
+           move    1      123
+      neighbour    2      167 201
+     neighbours    4      165 207 219 229
+            new    2      150 254
+           next    2      190 223
+           none    1      197
+        nothing    1       63
+            now    1      216
+       nowadays    1       48
+         number    1      162
+             of    9        3  11  56  90 113 147 163 203 231
+             on    2       45 236
+            one    1      199
+             or    7       36 103 116 186 198 226 247
+         others    1       69
+            out    1       55
+          paper    1       47
+         played    1       44
+          press    1      137
+        process    1      260
+        program    1      141
+         public    1       25
+        quickly    1      143
+        reached    1       22
+            red    1      102
+        related    1       72
+        repeats    1      261
+         return    1      138
+          rules    2      196 252
+           same    1      211
+       scanning    1      155
+     scientific    1       32
+         screen    2       84 238
+       scrutiny    1      183
+           seed    1      117
+        serious    1       78
+         sharpe    1        8
+           some    1       61
+       spacebar    1      128
+        squared    1       46
+          state    2      212 242
+          stays    1      208
+          study    1       79
+       subjects    1       76
+     successive    1      145
+    suffocation    1      232
+           take    1       50
+           than    1       65
+           that    1      174
+            the   21        1   9  16  52  83 110 119 124 127 140 161 171 180 18
+9 194 210 222 237 251 253 259
+    thereabouts    1       37
+           this    2       57  81
+          those    1       39
+          three    1      217
+             to    6       60  68 122 129 193 250
+         toggle    1      130
+            toy    1       67
+            two    1      205
+          under    1      182
+             up    2       30 160
+            use    1      118
+     vertically    1      177
+            was    3       13  28  42
+           when    2       26 233
+          white    1      105
+           wide    2       24  93
+           will    1      142
+           work    1       54
+        written    2        5  29
+            you    1      106
+
+(t)est container classes
+(r)ead text file
+(d)isplay word stats
+(q)uit
+Command >

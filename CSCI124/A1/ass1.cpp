@@ -1,0 +1,312 @@
+/********************************************************************
+ * CSCI124 - Ass1
+ * sja998
+ * ass1.cpp - Contains function definitions for student records database
+ ********************************************************************/
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <cstdlib>
+using namespace std;
+
+// ============== Constants ==========================================
+
+const char cTextFileName[]   = "ass1.txt";
+const char cBinaryFileName[] = "ass1.dat";
+const int cMaxRecs = 100;
+const int cMaxChars = 30;
+const int cMaxSubjects = 8;
+
+// ============= User Defined types ==================================
+
+enum StatusType{eEnrolled,eProvisional,eWithdrawn};
+struct SubjectType{ char Code[8]; StatusType Status; int Mark;};
+
+struct StudentRecord{
+	long StudentNo;
+	char FirstName[cMaxChars];
+	char LastName[cMaxChars];
+	int NumSubjects;
+	SubjectType Subjects[cMaxSubjects];
+};
+
+
+// ============= Global Data =========================================
+
+StudentRecord gRecs[cMaxRecs];
+int gNumRecs=0;
+
+
+// ============= Private Function Prototypes =========================
+
+void PrintRecord(int i);
+int FindRecord(long StudentNum);
+
+// ============= Public Function Definitions =========================
+
+// Reads data file into array
+void ReadFile()
+{     
+	
+     // init counter
+     int i = 0;
+     
+     // binary: open data file
+     ifstream binfin (cBinaryFileName, ios::in | ios::binary);
+
+     if (binfin.good())
+     {
+	while(!binfin.eof())
+	{
+		// write entire student record to file
+		binfin.read((char*)&gRecs[i], sizeof(StudentRecord));
+		i++;
+	}
+     }
+     else
+     {
+      	// open data file
+     	ifstream fin (cTextFileName);
+	
+     	// if fails to open
+     	if (!fin.good())
+     	{
+		// print error message
+		cerr << "Cannot find data file!\n";
+		exit(1);
+     	}
+	
+     	// while a record exists
+     	while (!fin.eof() && i < 100)
+     	{
+           	// get details
+           	fin >> gRecs[i].StudentNo;
+           	fin >> gRecs[i].FirstName;
+           	fin >> gRecs[i].LastName;
+           	fin >> gRecs[i].NumSubjects;
+           
+           	// get subjects
+           	for (int j = 0; j < gRecs[i].NumSubjects; j++)
+           	{
+	       		fin >> gRecs[i].Subjects[j].Code;
+	       		unsigned int status;
+	       		fin >> status;
+			switch(status)
+			{
+				case 0:
+					gRecs[i].Subjects[j].Status = eEnrolled;
+					break;
+				case 1: 
+					gRecs[i].Subjects[j].Status = eProvisional;
+					break;
+				case 2:
+					gRecs[i].Subjects[j].Status = eWithdrawn;
+					break;
+			}
+		       	fin >> gRecs[i].Subjects[j].Mark; 
+		 }
+           
+		   // inc i
+		   i++;
+	}
+     
+	// close data file
+	fin.close();
+     }
+     
+     gNumRecs = --i;
+     
+     // print success message
+     cout << gNumRecs << " records successfully read." << endl;
+     return;
+}
+
+// Displays specified record on screen
+void DisplayRecord()
+{
+     // prompt
+     cout << "Enter student number: ";
+     
+     // get number
+     int studentNumber;
+     cin >> studentNumber;
+     
+     // get record
+     int record = FindRecord(studentNumber);
+	
+     // print details
+     if (record != -1)
+        PrintRecord(record);
+     else
+        cout << "Record not found.";
+        
+     return; 
+}
+
+// Writes array to binary data file
+void SaveFile()
+{
+     // create out stream
+     ofstream fout (cBinaryFileName, ios::out | ios::binary);
+     
+     // if fails to create
+     if (!fout.good())
+     {
+        // print error message
+        cout << "Problem opening data file!\n";
+        exit(1);
+     }
+     
+     // write records to file
+     for (int i = 0; i < gNumRecs; i++)
+     { 
+         // write student record to file
+         fout.write((char*)&gRecs[i], sizeof(StudentRecord));
+     }
+     
+     // close out stream
+     fout.close();
+     
+     // print success message
+     cout << gNumRecs << " records saved." << endl;
+}
+
+// Updates status or mark of specified subject of specified student number
+void UpdateRecord()
+{
+     // prompt
+     cout << "Enter student number: ";
+     
+     // get student number
+     int studentnumber;
+     cin >> studentnumber;
+     
+     // get record index
+     int record = FindRecord(studentnumber);
+     
+     // update details
+     if (record != -1)
+     {
+         PrintRecord(record);
+         
+         // prompt
+         cout << "Please enter subject code: ";       
+         
+         // get subject code
+         char subjectcode[cMaxChars];
+         cin >> subjectcode;
+         
+         if (strcmp(subjectcode, "") != 0)
+         {
+            // get data to change
+            cout << "Change status or mark? (s/m) ";
+            char c;
+	    cin >> c;
+            
+            int mark;
+	    StatusType status;
+            if (c == 's')
+            {
+                 // prompt 
+                 cout << "Enter new status \n\te: enrolled\n\tp: provisional\n\tw: withdrawn\nStatus: ";                 
+                 // get status
+                 char v;
+                 cin >> v;
+                 
+                 switch(v)
+                 {
+                          case 'e': status = eEnrolled; break;
+                          case 'p': status = eProvisional; break;
+                          case 'w': status = eWithdrawn; break;
+                          default:
+                                  cerr << "Invalid code. Terminating..." << endl;
+                                  exit(1);
+                 }
+            }
+            else if (c == 'm')
+            {
+                 // prompt
+                 cout << "Enter new mark: ";                 
+                 // get mark
+                 cin >> mark;
+            }
+            
+            // find record and make change
+            for (int i = 0; i < gRecs[record].NumSubjects; i++)
+            {
+                if (strcmp(gRecs[record].Subjects[i].Code, subjectcode) == 0)
+                {
+                   if (c == 's')
+                      gRecs[record].Subjects[i].Status = status;
+                   else if (c == 'm')
+                      gRecs[record].Subjects[i].Mark = mark; 
+                      
+                   // print success message
+                   cout << "Record " << gRecs[record].StudentNo << " successfully updated." << endl;
+                }
+            } 
+
+	    // save to binary file
+	    ofstream binfout (cBinaryFileName, ios::out | ios::binary);
+
+	    // move to where record is located
+	    binfout.seekp(record * sizeof(StudentRecord));
+
+	    // overwrite data
+	    binfout.write((char*)&gRecs[record], sizeof(StudentRecord));                 
+         }                     
+     }
+     else
+     {
+         // print error message
+         cerr << "Record not found!" << endl;
+     } 
+}
+
+
+// ============= Private Function Definitions =========================
+
+// Prints record i on screen
+void PrintRecord(int i)
+{ 
+     // print general info
+     cout << "Student No.\t" << gRecs[i].StudentNo << endl;
+     cout << "First Name\t" << gRecs[i].FirstName << endl;
+     cout << "Last Name\t"<< gRecs[i].LastName << endl;
+     cout << "Subjects:" << endl;
+     
+     // print subject info
+     for (int j = 0; j < gRecs[i].NumSubjects; j++)
+     {
+         cout << '\t' << gRecs[i].Subjects[j].Code << endl;   
+         // print appropriate wording for status
+         switch (gRecs[i].Subjects[j].Status)
+         {
+                case 0:                     
+                     cout << "\tEnrolled" << endl;
+                     break;
+                case 1:              
+                     cout << "\tProvisional" << endl;
+                     break;
+                case 2:              
+                     cout << "\tWithdrawn" << endl;
+                     break;
+         }
+         cout << '\t' << gRecs[i].Subjects[j].Mark << endl << endl;
+     }
+     
+     return;
+}
+
+// returns index of matching record or -1 if not found
+int FindRecord(long StudentNo)
+{
+    // loop through records
+    for (int i = 0; i < gNumRecs; i++)
+    {
+        // if found return index
+        if (gRecs[i].StudentNo == StudentNo)
+             return i;
+    }
+    return -1;
+}

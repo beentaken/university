@@ -1,0 +1,2 @@
+To Compile: javac IDSE.java
+To Run: java IDSE <events.txt> <basedata.txt> <test-events.txt>
